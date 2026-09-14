@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたの経験、何になる？｜知的資産発掘診断</title>
+    <style>
+        /* ==================== PURE CSS STYLING (NO CDN / NO EXTERNAL LIBRARIES) ==================== */
+        :root {
+            --bg-color: #FAF8F5;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2933;
+            --text-muted: #68717A;
+            --border-color: #E8E2DC;
+            --accent: #D96C78;
+            --accent-hover: #C45965;
+            --light-accent: #FBECEF;
+            --dark: #111827;
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.7;
+        }
+
+        /* Editorial Header */
+        header {
+            width: 100%;
+            padding: 24px 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(250, 248, 245, 0.9);
+            backdrop-filter: blur(4px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        header h1 {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Main Container */
+        main {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 20px 64px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Vibrant gradient for primary CTA buttons with floating animation */
+        .btn-gradient {
+            background: linear-gradient(135deg, #D96C78 0%, #E0828E 50%, #C45965 100%);
+            transition: opacity 0.2s ease, transform 0.1s ease;
+            color: #FFFFFF;
+            border: none;
+            cursor: pointer;
+            animation: floatingCta 3.6s ease-in-out infinite;
+        }
+        .btn-gradient:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+        }
+        .btn-gradient:active {
+            transform: translateY(0px);
+        }
+
+        @keyframes floatingCta {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Gentle float animation for illustrations */
+        @keyframes editorialFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating-img {
+            animation: editorialFloat 4s ease-in-out infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .floating-img, .btn-gradient {
+                animation: none;
+            }
+        }
+
+        /* Top View Styles */
+        #view-top {
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+        }
+
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-section {
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
+
+        .label-badge {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            background-color: rgba(232, 226, 220, 0.4);
+            padding: 8px 16px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .hero-title {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 52px;
+            }
+        }
+
+        .hero-title span {
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.7;
+            max-width: 580px;
+        }
+
+        @media (min-width: 640px) {
+            .hero-desc {
+                font-size: 18px;
+            }
+        }
+
+        .hero-img-box {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        }
+
+        .hero-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .cta-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .cta-container {
+                align-items: flex-start;
+            }
+        }
+
+        .main-btn {
+            width: 100%;
+            max-width: 400px;
+            padding: 18px 32px;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+
+        .cta-note {
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .cta-note {
+                text-align: left;
+            }
+        }
+
+        .second-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding-top: 48px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .second-section-header {
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .second-section-header {
+                text-align: left;
+            }
+        }
+
+        .second-section-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        @media (min-width: 768px) {
+            .second-section-header h3 {
+                font-size: 24px;
+            }
+        }
+
+        .tags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 12px;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .tags-grid {
+                justify-content: flex-start;
+            }
+        }
+
+        .tag-item {
+            font-size: 13px;
+            font-weight: 500;
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            padding: 10px 18px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .second-section-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 580px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .second-section-desc {
+                font-size: 16px;
+                text-align: left;
+                margin: 0;
+            }
+        }
+
+        /* Quiz View Styles */
+        #view-quiz {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .quiz-progress-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quiz-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            background-color: var(--border-color);
+            height: 4px;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background-color: var(--accent);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 9999px;
+        }
+
+        .quiz-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-card {
+                padding: 40px;
+            }
+        }
+
+        .quiz-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-title {
+                font-size: 26px;
+            }
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent);
+            background-color: rgba(251, 236, 239, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent);
+            background-color: rgba(251, 236, 239, 0.6);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .option-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light-accent);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            margin-right: 16px;
+            flex-shrink: 0;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .option-btn.selected .option-badge {
+            background-color: var(--accent);
+            color: #FFFFFF;
+        }
+
+        .option-text {
+            font-size: 15px;
+            color: var(--text-main);
+            font-weight: 400;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        @media (min-width: 640px) {
+            .option-text {
+                font-size: 16px;
+            }
+        }
+
+        .option-check {
+            margin-left: 12px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .btn-prev {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+            padding: 4px 0;
+        }
+
+        .btn-prev:hover {
+            color: var(--text-main);
+        }
+
+        .btn-prev:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Result Page Styles */
+        #view-result {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .result-header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-header span {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .result-title-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 8px 32px;
+            margin: 0 auto;
+        }
+
+        .result-title-wrapper::before,
+        .result-title-wrapper::after {
+            content: "✦";
+            color: rgba(217, 108, 120, 0.4);
+            font-size: 24px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .result-title-wrapper::before {
+            left: 0;
+        }
+
+        .result-title-wrapper::after {
+            right: 0;
+        }
+
+        .result-title-wrapper h2 {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        @media (min-width: 640px) {
+            .result-title-wrapper h2 {
+                font-size: 36px;
+            }
+        }
+
+        .result-subtitle {
+            font-size: 15px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        @media (min-width: 640px) {
+            .result-subtitle {
+                font-size: 17px;
+            }
+        }
+
+        .result-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .result-card {
+                padding: 40px;
+            }
+        }
+
+        .result-card-heading {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .result-card-heading {
+                font-size: 20px;
+            }
+        }
+
+        .result-img-container {
+            text-align: center;
+        }
+
+        .result-img-box {
+            display: inline-block;
+            padding: 24px;
+            background-color: var(--bg-color);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .result-img-box img {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+        }
+
+        @media (min-width: 640px) {
+            .result-img-box img {
+                width: 192px;
+                height: 192px;
+            }
+        }
+
+        .target-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .target-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(232, 226, 220, 0.5);
+        }
+
+        .target-item:last-child {
+            border-bottom: none;
+        }
+
+        .target-bullet {
+            color: var(--accent);
+            font-weight: 700;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .target-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        @media (min-width: 640px) {
+            .target-text {
+                font-size: 16px;
+            }
+        }
+
+        .examples-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .example-item {
+            font-weight: 600;
+            color: var(--text-main);
+            background-color: var(--card-bg);
+            padding: 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .example-item {
+                font-size: 16px;
+            }
+        }
+
+        .example-dot {
+            color: var(--accent);
+        }
+
+        .seed-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        @media (min-width: 640px) {
+            .seed-text {
+                font-size: 16px;
+            }
+        }
+
+        .quote-box {
+            display: block;
+            background-color: var(--text-main);
+            color: #FFFFFF;
+            padding: 32px 24px;
+            border-radius: var(--radius);
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            border: 1px solid var(--text-main);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            cursor: pointer;
+        }
+
+        .quote-box:hover {
+            background-color: var(--dark);
+        }
+
+        .quote-label {
+            font-size: 11px;
+            color: rgba(232, 226, 220, 0.8);
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .quote-main {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .quote-main {
+                font-size: 20px;
+            }
+        }
+
+        .quote-link-text {
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .structure-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .structure-item {
+            font-size: 13px;
+            background-color: var(--card-bg);
+            padding: 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        @media (min-width: 640px) {
+            .structure-item {
+                font-size: 15px;
+            }
+        }
+
+        .structure-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .structure-text {
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .result-footer-box {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding: 32px 24px;
+            border-radius: var(--radius);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .result-footer-msg {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        @media (min-width: 640px) {
+            .result-footer-msg {
+                font-size: 15px;
+            }
+        }
+
+        .result-footer-msg strong {
+            color: var(--text-main);
+        }
+
+        .restart-btn {
+            padding: 12px 32px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .restart-btn:hover {
+            background-color: rgba(232, 226, 220, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            padding: 32px 0;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 64px;
+            background-color: var(--bg-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Editorial Header -->
+    <header>
+        <h1>あなたの経験、何になる？</h1>
+    </header>
+
+    <!-- Main Container -->
+    <main>
+
+        <!-- ==================== TOP PAGE (Minimalist First View + Editorial Section) ==================== -->
+        <div id="view-top">
+            <!-- First View -->
+            <div class="hero-section">
+                <!-- Small Label -->
+                <div class="label-badge">
+                    3分でわかる｜知的資産発掘診断
+                </div>
+
+                <!-- Big Title -->
+                <h2 class="hero-title">
+                    あなたの経験、<br>
+                    <span>何になる？</span>
+                </h2>
+
+                <!-- Short Description -->
+                <p class="hero-desc">
+                    経験・得意・学びから、<br class="hidden sm:inline">
+                    あなたに合う「知的資産の形」を3分で診断。
+                </p>
+
+                <!-- Main Illustration -->
+                <div class="hero-img-box">
+                    <img src="c50c.png" alt="知的資産発掘イメージ" class="floating-img" onerror="this.style.display='none'">
+                </div>
+
+                <!-- CTA Button & Note -->
+                <div class="cta-container">
+                    <button onclick="startQuiz()" class="main-btn btn-gradient">
+                        無料で診断する →
+                    </button>
+                    <p class="cta-note">
+                        全7問｜約3分｜登録不要
+                    </p>
+                </div>
+            </div>
+
+            <!-- Second Section Below First View -->
+            <div class="second-section">
+                <div class="second-section-header">
+                    <h3>こんな形が見つかります</h3>
+                    
+                    <!-- 5 Types Tags -->
+                    <div class="tags-grid">
+                        <span class="tag-item">書籍</span>
+                        <span class="tag-item">ワークブック</span>
+                        <span class="tag-item">診断</span>
+                        <span class="tag-item">講座</span>
+                        <span class="tag-item">チャレンジ企画</span>
+                    </div>
+                </div>
+
+                <p class="second-section-desc">
+                    あなたの経験や得意なことは、まだ「商品」と呼べる形になっていなくても大丈夫。<br>
+                    7つの質問から、あなたに合った活かし方を見つけます。
+                </p>
+            </div>
+        </div>
+
+        <!-- ==================== QUIZ PAGE ==================== -->
+        <div id="view-quiz" class="hidden">
+            <!-- Progress Bar Header -->
+            <div class="quiz-progress-wrapper">
+                <div class="quiz-progress-header">
+                    <span id="question-counter">QUESTION 01 / 07</span>
+                    <span id="question-remaining">あと6問</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="progress-bar" class="progress-bar-fill" style="width: 14%;"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="quiz-card">
+                <h3 id="question-title" class="quiz-title">
+                    質問文がここに入ります
+                </h3>
+                <div id="options-container" class="options-container">
+                    <!-- Options injected dynamically -->
+                </div>
+            </div>
+
+            <!-- Back Navigation -->
+            <div>
+                <button id="btn-prev" onclick="prevQuestion()" class="btn-prev">
+                    <span>←</span>
+                    <span>前の質問へ</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== RESULT PAGE ==================== -->
+        <div id="view-result" class="hidden">
+            <div id="result-content" style="display: flex; flex-direction: column; gap: 32px;">
+                <!-- Injected dynamically via JavaScript -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Editorial Footer -->
+    <footer>
+        <p>© あなたの経験、何になる？ All Rights Reserved.</p>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
+    <script>
+        const questions = [
+            {
+                q: "あなたが今「これなら誰かに話せるかも」と思うのは？",
+                options: [
+                    { label: "自分が経験したこと、乗り越えてきたこと", type: "A" },
+                    { label: "人より少し詳しいこと", type: "B" },
+                    { label: "自分や人の性格・強み・心について", type: "C" },
+                    { label: "仕事や資格、学んできた専門知識", type: "D" },
+                    { label: "心許せる人と一緒にやってみたいこと", type: "E" }
+                ]
+            },
+            {
+                q: "人からこんなふうに言われるなら、どれが嬉しい？",
+                options: [
+                    { label: "「その経験、もっと聞きたい」", type: "A" },
+                    { label: "「それ得意だよね。どうやるの？」", type: "B" },
+                    { label: "「話してたら自分のことが分かってきた」", type: "C" },
+                    { label: "「詳しいね！説明が分かりやすい」", type: "D" },
+                    { label: "「あなたと一緒ならできそう！」", type: "E" }
+                ]
+            },
+            {
+                q: "ついやってしまうことは？",
+                options: [
+                    { label: "自分の経験を振り返って意味を考える", type: "A" },
+                    { label: "好きなことを試して、人にも教える", type: "B" },
+                    { label: "人を観察したり、心理やタイプを考える", type: "C" },
+                    { label: "興味のあるテーマをとことん深く調べる", type: "D" },
+                    { label: "面白そうなことをすぐやる", type: "E" }
+                ]
+            },
+            {
+                q: "他の人に対して、どう役に立ちたい？",
+                options: [
+                    { label: "安心感を与えたい", type: "A" },
+                    { label: "初心者に最初のやり方を教えたい", type: "B" },
+                    { label: "その人自身の強みや本音に気づいてほしい", type: "C" },
+                    { label: "難しいことを理解して、実践できるようになってほしい", type: "D" },
+                    { label: "一緒に行動して「できた！」まで連れていきたい", type: "E" }
+                ]
+            },
+            {
+                q: "1冊完結型のワークブックを作るなら？",
+                options: [
+                    { label: "読者が自分を振り返る本", type: "A" },
+                    { label: "好き・得意なことの初心者向け入門BOOK", type: "B" },
+                    { label: "質問や診断で「自分」が分かる本", type: "C" },
+                    { label: "知識やノウハウを順番に実践する形式", type: "D" },
+                    { label: "7日・21日・30日など習慣化を持たせ、期間内に何かを完成させるBOOK", type: "E" }
+                ]
+            },
+            {
+                q: "本を買った人に、一番起こしたい気持ちは？",
+                options: [
+                    { label: "「わたしも乗り越えられるかも」", type: "A" },
+                    { label: "「これ！できそう」", type: "B" },
+                    { label: "「わたし、こういう人だったんだ！」", type: "C" },
+                    { label: "「なるほど。こうやればいいのか！」", type: "D" },
+                    { label: "「やった！最後までできたよ！」", type: "E" }
+                ]
+            },
+            {
+                q: "今のあなたに一番近いのは？",
+                options: [
+                    { label: "まだ商品はないが、人生経験ならたくさんある", type: "A" },
+                    { label: "ネタとして、好き・得意なことはある", type: "B" },
+                    { label: "心理・占い・自己理解などに興味がある", type: "C" },
+                    { label: "資格・専門知識のノウハウがある", type: "D" },
+                    { label: "教えるより、一緒にチャレンジする企画なら楽しそう", type: "E" }
+                ]
+            }
+        ];
+
+        const resultsData = {
+            A: {
+                typeName: "経験を届ける「ストーリー型」",
+                image: "d710.png",
+                shortDesc: "人生経験・失敗・克服体験から作る",
+                ctaUrl: "https://megu-aoki.com/p/r/ZTcaALCU",
+                targetUser: [
+                    "人生で乗り越えてきたことがある",
+                    "昔の自分と同じことで悩む人を助けたい",
+                    "自分の経験を話すと「もっと聞きたい」と言われる",
+                    "「私には専門性なんてない」と思っている"
+                ],
+                examples: [
+                    "『離婚後、自分らしく生き直すワークブック』",
+                    "『50代から人生をもう一度楽しむノート』",
+                    "『頑張りすぎをやめる30の質問』"
+                ],
+                seed: "あなたが乗り越えてきたことは、今そこにいる人には知りたいこと。あなたには当たり前になった経験も、まだその問題の真ん中にいる人にとっては「その先へ進む地図」になります。",
+                quote: "「昔のあなた」が欲しかったものを、今のあなたが作ってあげよう。",
+                structure: [
+                    "あの頃、何に悩んでいた？",
+                    "何をしてもうまくいかなかったこと",
+                    "転機になった出来事",
+                    "気づいたこと",
+                    "変化したこと",
+                    "読者自身が振り返るワーク",
+                    "明日からできる小さな一歩"
+                ]
+            },
+            B: {
+                typeName: "得意を教える「はじめの一歩型」",
+                image: "a77.png",
+                shortDesc: "資格・趣味・人より少し詳しいことから作る",
+                ctaUrl: "https://megu-aoki.com/p/r/DoTw7L5N",
+                targetUser: [
+                    "好きで長く続けていることがある",
+                    "人から「それ、どうやるの？」と聞かれる",
+                    "資格や趣味を何かに活かしてみたい",
+                    "「プロと言えるほどじゃない」と思っている"
+                ],
+                examples: [
+                    "『はじめてのひとり旅 準備ワークブック』",
+                    "『スマホだけで素敵な写真を撮る練習帳』",
+                    "『ズボラさんのための7日間お片づけBOOK』"
+                ],
+                seed: "あなたの「普通にできる」は、初めての人にとって知りたいこと。世界一詳しくなくても大丈夫。初心者には、少し先を歩いている人だからこそ教えられることがあります。",
+                quote: "100点の先生にならなくていい。あなたの10歩後ろにいる人へ、最初の一歩を教えてあげませんか。",
+                structure: [
+                    "まずこれだけ知っておこう",
+                    "必要なものを準備する",
+                    "最初にやってみること",
+                    "初心者がつまずくポイント",
+                    "実際にやってみよう",
+                    "できたかチェック",
+                    "次に挑戦すること"
+                ]
+            },
+            C: {
+                typeName: "自分を知る「診断・発見型」",
+                image: "cfc.png",
+                shortDesc: "心理・占い・キャリア・自己理解などから作る",
+                ctaUrl: "https://megu-aoki.com/p/r/RvVRz7yA",
+                targetUser: [
+                    "心理学や占い、自己理解が好き",
+                    "人の強みや個性を見つけるのが好き",
+                    "相談されると、つい質問したくなる",
+                    "「その人らしい答え」を一緒に探すのが得意"
+                ],
+                examples: [
+                    "『本当にやりたいことが見つかる30の質問』",
+                    "『わたしの強み発見ワークブック』",
+                    "『自分の取扱説明書をつくるBOOK』"
+                ],
+                seed: "答えを教えることだけが商品ではありません。「自分の答え」に気づける問いも商品になります。診断や質問を通じて「私って、そうだったんだ！」を作れる人です。",
+                quote: "答えを持っていなくてもいい。いい問いは、その人の中にある答えを連れてきます。",
+                structure: [
+                    "現在地チェック",
+                    "簡単な診断",
+                    "自分の特徴を知る",
+                    "強みと苦手を整理する",
+                    "過去の経験と照らし合わせる",
+                    "自分に合う選択を考える",
+                    "私の取扱説明書を完成"
+                ]
+            },
+            D: {
+                typeName: "知識を形にする「メソッド・実践型」",
+                image: "c30.png",
+                shortDesc: "専門知識や既存講座をワーク化する",
+                ctaUrl: "https://megu-aoki.com/p/r/Y6CCOWMj",
+                targetUser: [
+                    "仕事や資格で身につけた専門知識がある",
+                    "長く学び続けているテーマがある",
+                    "人に説明すると「分かりやすい」と言われる",
+                    "すでに講座、資料、セミナーなどを持っている人にもおすすめ"
+                ],
+                examples: [
+                    "『90日で自分の商品をつくる実践ワークブック』",
+                    "『初心者のためのSNS発信設計BOOK』",
+                    "『〇〇デビューのための7STEP実践ノート』"
+                ],
+                seed: "頭の中にある知識は、「誰でも実践できる順番」にすると商品になります。すでに講座がある人なら、スライド、PDF、ワークシートも立派な出版素材になります。AIで構成できるので、ゼロから書かなくても大丈夫。",
+                quote: "何度も「同じことを教えている」としたら、「知識を代理で広げる」一冊に働いてもらいませんか。",
+                structure: [
+                    "現在地を確認",
+                    "ゴールを決める",
+                    "基礎知識",
+                    "メソッド①",
+                    "メソッド②",
+                    "メソッド③",
+                    "成果確認と次の行動"
+                ]
+            },
+            E: {
+                typeName: "一緒に完成させる「チャレンジ型」",
+                image: "381.png",
+                shortDesc: "30日実践、○○完成、記録帳などから作る",
+                ctaUrl: "https://megu-aoki.com/p/r/OTbkc482",
+                targetUser: [
+                    "人と一緒に何かをするのが好き",
+                    "「教える」より「一緒にやろう！」が得意",
+                    "行動を応援したり伴走したりするのが好き",
+                    "ゴールや期限があると力を発揮する"
+                ],
+                examples: [
+                    "『30日で発信習慣をつくるチャレンジBOOK』",
+                    "『21日で「本音と愛」を見つけるノート』",
+                    "『7日間で理想の部屋をつくる実践ワークブック』"
+                ],
+                seed: "知識をたくさん持っていなくても、「できた！」というゴールへ連れていくことは商品になります。読む本ではなく、書く、試す、記録する。そして最後に完成させる。そんな「使う出版物」が向いています。",
+                quote: "無理やり先生にならなくていい。書籍と共に一緒に走って、最後に「できたね！」と見守れる人へ。",
+                structure: [
+                    "ゴールを決める",
+                    "ルールを決める",
+                    "最初の一歩",
+                    "1週間目の実践",
+                    "中間チェック",
+                    "完成へ進む",
+                    "Before／Afterと次の一歩"
+                ]
+            }
+        };
+
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+
+        const viewTop = document.getElementById('view-top');
+        const viewQuiz = document.getElementById('view-quiz');
+        const viewResult = document.getElementById('view-result');
+        const progressBar = document.getElementById('progress-bar');
+        const questionCounter = document.getElementById('question-counter');
+        const questionRemaining = document.getElementById('question-remaining');
+        const questionTitle = document.getElementById('question-title');
+        const optionsContainer = document.getElementById('options-container');
+        const btnPrev = document.getElementById('btn-prev');
+        const resultContent = document.getElementById('result-content');
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            viewTop.classList.add('hidden');
+            viewResult.classList.add('hidden');
+            viewQuiz.classList.remove('hidden');
+            renderQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderQuestion() {
+            const qData = questions[currentQuestionIndex];
+            questionTitle.textContent = qData.q;
+            
+            const progressPct = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progressPct}%`;
+            
+            const formattedNum = String(currentQuestionIndex + 1).padStart(2, '0');
+            const totalNum = String(questions.length).padStart(2, '0');
+            questionCounter.textContent = `QUESTION ${formattedNum} / ${totalNum}`;
+            
+            const remaining = questions.length - (currentQuestionIndex + 1);
+            questionRemaining.textContent = remaining > 0 ? `あと${remaining}問` : '最後の質問';
+
+            btnPrev.disabled = currentQuestionIndex === 0;
+
+            const letters = ['A', 'B', 'C', 'D', 'E'];
+
+            optionsContainer.innerHTML = '';
+            qData.options.forEach((opt, idx) => {
+                const letter = letters[idx];
+                const isSelected = userAnswers[currentQuestionIndex] === opt.type;
+
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${isSelected ? 'selected' : ''}`;
+                
+                btn.innerHTML = `
+                    <div class="option-badge">
+                        ${letter}
+                    </div>
+                    <span class="option-text">
+                        ${opt.label}
+                    </span>
+                    <span class="option-check ${isSelected ? '' : 'hidden'}">✓</span>
+                `;
+                
+                btn.onclick = () => selectAnswer(opt.type, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(type, btnElement) {
+            userAnswers[currentQuestionIndex] = type;
+            
+            const allBtns = optionsContainer.querySelectorAll('button');
+            allBtns.forEach(b => {
+                const isThisBtn = (b === btnElement);
+                if (isThisBtn) {
+                    b.className = 'option-btn selected';
+                    const check = b.querySelector('.option-check');
+                    if (check) check.classList.remove('hidden');
+                } else {
+                    b.className = 'option-btn';
+                    const check = b.querySelector('.option-check');
+                    if (check) check.classList.add('hidden');
+                }
+            });
+
+            setTimeout(() => {
+                if (currentQuestionIndex < questions.length - 1) {
+                    currentQuestionIndex++;
+                    renderQuestion();
+                } else {
+                    calculateResult();
+                }
+            }, 250);
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function calculateResult() {
+            const counts = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+            userAnswers.forEach(ans => {
+                if (counts[ans] !== undefined) {
+                    counts[ans]++;
+                }
+            });
+
+            let maxCount = -1;
+            let topTypes = [];
+            for (const type in counts) {
+                if (counts[type] > maxCount) {
+                    maxCount = counts[type];
+                    topTypes = [type];
+                } else if (counts[type] === maxCount) {
+                    topTypes.push(type);
+                }
+            }
+
+            let finalType = topTypes[0];
+
+            if (topTypes.length > 1) {
+                const q7Ans = userAnswers[6];
+                if (topTypes.includes(q7Ans)) {
+                    finalType = q7Ans;
+                } else {
+                    const q5Ans = userAnswers[4];
+                    if (topTypes.includes(q5Ans)) {
+                        finalType = q5Ans;
+                    }
+                }
+            }
+
+            renderResult(finalType);
+        }
+
+        function renderResult(typeKey) {
+            const data = resultsData[typeKey];
+            viewQuiz.classList.add('hidden');
+            viewResult.classList.remove('hidden');
+
+            let targetUserHtml = data.targetUser.map(item => `
+                <li class="target-item">
+                    <span class="target-bullet">—</span>
+                    <span class="target-text">${item}</span>
+                </li>
+            `).join('');
+
+            let examplesHtml = data.examples.map(ex => `
+                <li class="example-item">
+                    <span class="example-dot">▪</span>
+                    <span>${ex}</span>
+                </li>
+            `).join('');
+
+            let structureHtml = data.structure.map((st, idx) => `
+                <li class="structure-item">
+                    <span class="structure-num">${idx + 1}</span>
+                    <span class="structure-text">${st}</span>
+                </li>
+            `).join('');
+
+            resultContent.innerHTML = `
+                <!-- 1. Header Type Banner with Decorated Title -->
+                <div class="result-header">
+                    <span>診断結果：あなたにぴったりのタイプ</span>
+                    <div class="result-title-wrapper">
+                        <h2>${data.typeName}</h2>
+                    </div>
+                    <p class="result-subtitle">${data.shortDesc}</p>
+                </div>
+
+                <!-- 2. Section: こんな人に向いています♪ & Prominent CTA placed directly underneath -->
+                <div class="result-card">
+                    <h3 class="result-card-heading">こんな人に向いています♪</h3>
+                    <ul class="target-list">
+                        ${targetUserHtml}
+                    </ul>
+
+                    <!-- Prominent CTA Section -->
+                    <div style="text-align: center; margin-top: 24px; padding-top: 28px; border-top: 1px solid var(--border-color);">
+                        <p style="font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 16px;">あなたのタイプを「最短で形にする」ヒント</p>
+                        <a href="${data.ctaUrl}" target="_blank" rel="noopener noreferrer" class="main-btn btn-gradient" style="max-width: 480px; padding: 20px 32px; display: inline-block; margin: 0 auto; line-height: 1.5; font-size: 17px;">
+                            <span style="display: block; font-size: 15px; font-weight: 700;">ページに書ききれない</span>
+                            <span style="display: block; font-size: 18px; font-weight: 700; margin-top: 2px;">「詳しい解説」を無料で見る →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. Large Illustration Card -->
+                <div class="result-card" style="text-align: center;">
+                    <div class="result-img-container">
+                        <div class="result-img-box" style="padding: 36px; width: 100%; max-width: 320px; margin: 0 auto;">
+                            <img src="${data.image}" alt="${data.typeName}" class="floating-img" style="width: 192px; height: 192px;" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Section: 出版物の例 -->
+                <div class="result-card">
+                    <h3 class="result-card-heading">出版物の例</h3>
+                    <ul class="examples-list">
+                        ${examplesHtml}
+                    </ul>
+                </div>
+
+                <!-- 5. Section: 商品のタネ -->
+                <div class="result-card">
+                    <h3 class="result-card-heading">商品のタネ</h3>
+                    <p class="seed-text">${data.seed}</p>
+                </div>
+
+                <!-- 6. Section: 良い書籍になる一言 (Button Link) -->
+                <a href="${data.ctaUrl}" target="_blank" rel="noopener noreferrer" class="quote-box">
+                    <span class="quote-label">💡 良い書籍になる一言</span>
+                    <p class="quote-main">「${data.quote}」</p>
+                    <span class="quote-link-text">クリックして詳細を見る →</span>
+                </a>
+
+                <!-- 7. Section: おすすめのワークブック構成 -->
+                <div class="result-card">
+                    <h3 class="result-card-heading">おすすめのワークブック構成</h3>
+                    <ul class="structure-list">
+                        ${structureHtml}
+                    </ul>
+                </div>
+
+                <!-- Result Common Footer Message -->
+                <div class="result-footer-box">
+                    <p class="result-footer-msg">
+                        あなたにも、もう「商品のタネ」があります。<br>
+                        商品がなくても。講座がなくても。すごい資格がなくても。<br>
+                        経験・得意・学び・問い・行動。<br>
+                        あなたがすでに持っているものを<br>
+                        <strong>「誰向け × 悩み × 叶える未来」</strong><br>
+                        で整理すると、誰かの役に立つ出版物・ワークブックに変わります。
+                    </p>
+
+                    <div>
+                        <button onclick="startQuiz()" class="restart-btn">
+                            🔄 もう一度診断する
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
